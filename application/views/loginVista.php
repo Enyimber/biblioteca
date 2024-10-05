@@ -35,14 +35,14 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">BIBLIOTECA UTS</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="post" action="<?php echo base_url('usuario/login'); ?>">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="usuario"  placeholder="User">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" id="clave" placeholder="Contraseña">
                                         </div>
-                                        <button type="sutmin" class="btn btn-primary btn-user btn-block">Login</button>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
                                     </form>
                                 </div>
                             </div>
