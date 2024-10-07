@@ -13,6 +13,7 @@
     <!-- Custom fonts for this template-->
     <link href="<?php echo base_url('plantilla/vendor/fontawesome-free/css/all.min.css'); ?>" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url('plantilla/css/sb-admin-2.min.css'); ?>" rel="stylesheet">
@@ -35,14 +36,14 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">BIBLIOTECA UTS</h1>
                                     </div>
-                                    <form class="user" method="post" action="<?php echo base_url('login/consultarUsuario'); ?>">
+                                    <form class="user" method="post" id="forlogin">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="usuario" name="usuario"  placeholder="User">
+                                            <input type="text" class="form-control form-control-user" id="usuario" name="usuario"  placeholder="User" require>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="clave" name="clave" placeholder="Contraseña">
+                                            <input type="password" class="form-control form-control-user" id="clave" name="clave" placeholder="Contraseña" require>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+                                        <button  type='button' id='button' class="btn btn-primary btn-user btn-block">Login</button>
                                     </form>
                                 </div>
                             </div>
@@ -63,6 +64,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?php echo base_url('plantilla/js/sb-admin-2.min.js'); ?>"></script>
+    <script> const base_url ='<?= base_url()?>'; </script>
+    <script src="<?php echo base_url('plantilla/js/login.js'); ?>"></script>
+  
 
 </body>
 
