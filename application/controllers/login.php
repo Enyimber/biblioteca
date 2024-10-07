@@ -9,6 +9,7 @@ class Login extends CI_Controller
         parent::__construct();
         $this->load->model('LoginModel');
         $this->load->library('form_validation');
+        $this->load->library('session'); 
     }
 
     public function index()
@@ -46,6 +47,10 @@ class Login extends CI_Controller
                 $usuarioValidado = $this->LoginModel->validarUsuario($usuario, $clave);
 
                 if ($usuarioValidado) {
+                     // Establecer datos de sesión al iniciar sesión
+                    $this->session->set_userdata('usuario', $usuarioValidado->usuario_login);
+                    $this->session->set_userdata('logged_in', TRUE);
+                    $this->session->set_userdata('rol',  $usuarioValidado->id_rol);
                     // El usuario existe, proceder con el login (puedes iniciar una sesión, etc.)
                     $json['mensaje'] = "¡Login exitoso! Usuario: " . $usuarioValidado->usuario_login;
                     $json['title'] = 'exito';
