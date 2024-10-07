@@ -10,6 +10,10 @@ class Login extends CI_Controller
         $this->load->model('LoginModel');
         $this->load->library('form_validation');
         $this->load->library('session'); 
+        if ($this->session->userdata('logged_in')) {
+            header('location:'.base_url('home'));
+            exit;
+        }
     }
 
     public function index()
@@ -65,5 +69,11 @@ class Login extends CI_Controller
             $json['mensaje'] = $th->getMessage();
         }
         echo json_encode($json);
+    }
+
+    public function logout() {
+        $this->session->sess_destroy();
+        $this->session->sess_regenerate(TRUE);
+        redirect('login');
     }
 }
