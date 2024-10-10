@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost:8080/biblioteca/';
+/* $config['base_url'] = 'https://7bvphn2g-8080.use2.devtunnels.ms/biblioteca/'; */
 
 /*
 |--------------------------------------------------------------------------

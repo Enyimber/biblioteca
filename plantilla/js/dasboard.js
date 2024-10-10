@@ -31,10 +31,10 @@ const cargarLibrosDisponiblesGenero = async () => {
 		if (respuesta) {
 			// Actualiza el contenido de la tabla
 
-            	//loadDataTable("lista", 0, "asc");
-                if ($.fn.DataTable.isDataTable("#lista")) {
-                    $("#lista").DataTable().clear().destroy();
-                }
+			//loadDataTable("lista", 0, "asc");
+			if ($.fn.DataTable.isDataTable("#lista")) {
+				$("#lista").DataTable().clear().destroy();
+			}
 
 			lisTbody.innerHTML = respuesta;
 
@@ -42,9 +42,7 @@ const cargarLibrosDisponiblesGenero = async () => {
 			// Verifica si la tabla ya tiene la propiedad 'DataTable'
 
 			// Verifica si $.fn.dataTable está disponible
-            
 
-		
 			prueba("lista", 0, "asc");
 		} else {
 			// Manejo si no se recibió respuesta o ocurrió un error
@@ -53,7 +51,7 @@ const cargarLibrosDisponiblesGenero = async () => {
 	} catch (error) {
 		console.error("Error al cargar los libros disponibles por género:", error);
 	}
-}; 
+};
 
 const cargarLibrosPorRango = async () => {
 	const url = base_url + "home/buscarLibrosAutor";
@@ -63,29 +61,43 @@ const cargarLibrosPorRango = async () => {
 	data.append("anoFinal", $("#anoFinal").val());
 
 	try {
-		// Espera a que la solicitud se complete y obtén la respuesta
 		const respuesta = await execute_fetch(url, data);
 
-		// Verifica si la respuesta no es null antes de continuar
 		if (respuesta) {
-			
-			// Verifica si la tabla ya tiene la propiedad 'DataTable'
 			if ($.fn.DataTable.isDataTable("#lista_fun3")) {
 				$("#lista_fun3").DataTable().clear().destroy();
 			}
-			
-			// Actualiza el contenido de la tabla
+
 			lisTbodyAutores.innerHTML = respuesta;
-		
-			loadDataTable("lista_fun3", 0, "asc");
+
+			$("#lista_fun3").DataTable({
+				pageLength: 3, // Reducimos a 3 filas por página
+				lengthMenu: [
+					[3, 5, 10, -1],
+					[3, 5, 10, "Todos"],
+				],
+				scrollY: "163px", // Altura fija del cuerpo de la tabla a 60px
+				scrollCollapse: true,
+				responsive: true,
+				autoWidth: false,
+				order: [[0, "asc"]],
+				columnDefs: [{ width: "100%", targets: 0 }],
+				language: {
+					url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
+				},
+				dom:
+					'<"row"<"col-sm-12"tr>>' +
+					'<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+				paging: false, // Desactivamos la paginación
+				info: false, // Ocultamos la información de paginación
+			});
 		} else {
-			// Manejo si no se recibió respuesta o ocurrió un error
 			console.error("No se pudo cargar la respuesta.");
 		}
 	} catch (error) {
 		console.error("Error al cargar los libros disponibles por género:", error);
 	}
-}; 
+};
 
 const execute_fetch = async (url, data) => {
 	try {
@@ -109,10 +121,9 @@ const execute_fetch = async (url, data) => {
 };
 
 function prueba(idTabla, indiceColumn, orderColumn) {
-   
-    /* $('#equictntbl').DataTable().clear().destroy(); */
+	/* $('#equictntbl').DataTable().clear().destroy(); */
 	let table = new DataTable(`#${idTabla}`, {
-		scrollY: "400px",
+		scrollY: "230px",
 		scrollCollapse: true,
 		paging: false,
 		pageLength: -1,
@@ -157,11 +168,11 @@ function prueba(idTabla, indiceColumn, orderColumn) {
 				copy: "Copiar",
 				colvis: "Visibilidad",
 			},
-		}
+		},
 	});
 }
 const loadDataTable = (idTabla, indiceColumn, orderColumn) => {
-    let table = new DataTable(`#${idTabla}`, {
+	let table = new DataTable(`#${idTabla}`, {
 		scrollY: "400px",
 		scrollCollapse: true,
 		paging: false,

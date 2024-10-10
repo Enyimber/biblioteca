@@ -18,7 +18,7 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
+    <a class="scroll-to-top rounded" href="#page-top" id="scrollTopLink">
         <i class="fas fa-angle-up"></i>
     </a>
 
@@ -44,6 +44,7 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="<?= base_url('plantilla/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+    <script src="<?= base_url('plantilla/js/desplasar.js')?>"></script>
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
   
@@ -54,6 +55,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url('plantilla/js/sb-admin-2.min.js')?>"></script>
+    
 
 </body>
 

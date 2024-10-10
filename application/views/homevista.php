@@ -99,6 +99,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
@@ -174,7 +175,6 @@
             </div>
         </div>
     </div>
-    
 
     <div class="row">
 
@@ -207,44 +207,47 @@
         </div>
 
         <!-- Pie Chart -->
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
+        <div class="col-xl-4 col-lg-5 " >
+            <div class="card shadow mb-4" style="height: 450px">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Libros de cada autor</h6>
                 </div>
                 <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
+                    <div class="mb-3">
                         <div class="form-group">
                             <label for="listaAutores">Autores:</label>
-                            <select name="listaAutores" id="listaAutores" class="form-control form-control-sm custom-select custom-select-sm">
+                            <select name="listaAutores" id="listaAutores" class="form-control form-control-sm custom-select custom-select-sm w-75">
                                 <?php foreach ($autor as $key): ?>
                                     <option value="<?php echo htmlspecialchars($key->nombre_autor); ?>"><?php echo htmlspecialchars($key->nombre_autor); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="anoInicial">Año Inicial:</label>
-                            <input type="number" name="anoInicial" id="anoInicial" class="form-control form-control-sm">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="anoInicial">Año Inicial:</label>
+                                <input type="number" name="anoInicial" id="anoInicial" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="anoFinal">Año Final:</label>
+                                <input type="number" name="anoFinal" id="anoFinal" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="d-block">&nbsp;</label>
+                                <button onclick="cargarLibrosPorRango();" class="btn btn-info btn-sm btn-block">Consultar</button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="anoFinal">Año Final:</label>
-                            <input type="number" name="anoFinal" id="anoFinal" class="form-control form-control-sm">
+                        <div>
+                            <table id="lista_fun3" class="table table-sm table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Libro</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="lisTbody_fn3">
+                                    <!-- Los libros se cargarán aquí dinámicamente -->
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="form-group">
-                            <button onclick="cargarLibrosPorRango();" class="btn btn-info btn-sm btn-block">Consultar</button>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <table id="lista_fun3" class="table table-sm table-bordered table-hover">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Libro</th>
-                                </tr>
-                            </thead>
-                            <tbody id="lisTbody_fn3">
-                                <!-- Los libros se cargarán aquí dinámicamente -->
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -252,14 +255,13 @@
     </div>
 
     <div class="row">
-        <!-- Area Chart -->
-        <div class="col-12 col-xl-20"> <!-- Aumentado el ancho en pantallas extra grandes -->
+        <div class="col-12  col-lg-20">
             <div class="card shadow">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Libros pocos prestados</h6>
                 </div>
                 <div class="card-body card-scrollable">
-                    <div class="table-responsive">
+                    <div class="mb-3">
                         <table id="lista_fun4" class="table table-bordered table-striped table-hover">
                             <thead class="thead-light">
                                 <tr>
@@ -283,6 +285,7 @@
             </div>
         </div>
     </div>
+
 </div>
 <?php $this->load->view('footer'); ?>
 <script>
