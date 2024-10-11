@@ -72,6 +72,8 @@ class Home extends CI_Controller
             <td>'.$key->nombre.'</td>
             </tr>';
             }
+        } else {
+            $tbody = '<tr><td>No hay resultados.</td></tr>';
         }
         echo json_encode($tbody);
     }

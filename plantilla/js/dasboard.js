@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	selectCanGeneros.innerText = selectGenero.value;
 	cargarLibrosDisponiblesGenero();
 	loadDataTable("lista_fun4", 0, "asc");
+	cargarLibrosPorRango();
 });
 
 selectGenero.addEventListener("change", () => {
@@ -70,27 +71,7 @@ const cargarLibrosPorRango = async () => {
 
 			lisTbodyAutores.innerHTML = respuesta;
 
-			$("#lista_fun3").DataTable({
-				pageLength: 3, // Reducimos a 3 filas por página
-				lengthMenu: [
-					[3, 5, 10, -1],
-					[3, 5, 10, "Todos"],
-				],
-				scrollY: "163px", // Altura fija del cuerpo de la tabla a 60px
-				scrollCollapse: true,
-				responsive: true,
-				autoWidth: false,
-				order: [[0, "asc"]],
-				columnDefs: [{ width: "100%", targets: 0 }],
-				language: {
-					url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json",
-				},
-				dom:
-					'<"row"<"col-sm-12"tr>>' +
-					'<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-				paging: false, // Desactivamos la paginación
-				info: false, // Ocultamos la información de paginación
-			});
+			prueba("lista_fun3", 0, "asc", "163px");
 		} else {
 			console.error("No se pudo cargar la respuesta.");
 		}
@@ -120,10 +101,10 @@ const execute_fetch = async (url, data) => {
 	}
 };
 
-function prueba(idTabla, indiceColumn, orderColumn) {
+function prueba(idTabla, indiceColumn, orderColumn, altoTabla = "243px") {
 	/* $('#equictntbl').DataTable().clear().destroy(); */
 	let table = new DataTable(`#${idTabla}`, {
-		scrollY: "230px",
+		scrollY: altoTabla,
 		scrollCollapse: true,
 		paging: false,
 		pageLength: -1,

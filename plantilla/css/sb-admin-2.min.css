@@ -3823,7 +3823,6 @@ input[type="submit"].btn-block {
 	display: block;
 }
 .navbar {
-	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -4261,7 +4260,7 @@ input[type="submit"].btn-block {
 .card-header {
 	padding: 0.75rem 1.25rem;
 	margin-bottom: 0;
-	background-color: #f8f9fc;
+	/* background-color: #f8f9fc; */
 	border-bottom: 1px solid #e3e6f0;
 }
 .card-header:first-child {

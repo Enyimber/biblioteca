@@ -180,35 +180,39 @@
 
         <!-- Area Chart -->
         <div class="col-12 col-md-10 col-lg-8">
-            <div class="card shadow">
+            <div class="card shadow" style="height: 450PX">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Libros disponibles</h6>
                 </div>
                 <div class="card-body card-scrollable">
                     <div class="mb-3">
-                        <label for="listageneros" class="form-label">Seleccionar Género</label>
-                        <select name="listageneros" id="listageneros" class="form-control form-control-sm custom-select custom-select-sm">
-                            <?php foreach ($genero as $key): ?>
-                                <option value="<?php echo htmlspecialchars($key->genero); ?>"><?php echo htmlspecialchars($key->genero); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <table id="lista" class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Libro</th>
-                                </tr>
-                            </thead>
-                            <tbody id="lisTbody">
-                            </tbody>
-                        </table>
+                        <div class="form-group">
+                            <label for="listageneros" class="form-label">Seleccionar Género</label>
+                            <select name="listageneros" id="listageneros" class="form-control form-control-sm custom-select custom-select-sm w-75">
+                                <?php foreach ($genero as $key): ?>
+                                    <option value="<?php echo htmlspecialchars($key->genero); ?>"><?php echo htmlspecialchars($key->genero); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div>
+                            <table id="lista" class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Libro</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="lisTbody">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Pie Chart -->
-        <div class="col-xl-4 col-lg-5 " >
-            <div class="card shadow mb-4" style="height: 450px">
+        <div class="col-xl-4 col-lg-5 ">
+            <div class="card shadow mb-4" style="height: 450PX">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Libros de cada autor</h6>
                 </div>
@@ -225,11 +229,11 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="anoInicial">Año Inicial:</label>
-                                <input type="number" name="anoInicial" id="anoInicial" class="form-control form-control-sm">
+                                <input type="number" name="anoInicial" id="anoInicial" class="form-control form-control-sm" value = "1880">
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="anoFinal">Año Final:</label>
-                                <input type="number" name="anoFinal" id="anoFinal" class="form-control form-control-sm">
+                                <input type="number" name="anoFinal" id="anoFinal" class="form-control form-control-sm" value = "2024" >
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="d-block">&nbsp;</label>
@@ -237,10 +241,10 @@
                             </div>
                         </div>
                         <div>
-                            <table id="lista_fun3" class="table table-sm table-bordered table-hover">
-                                <thead class="thead-light">
+                            <table id="lista_fun3" class="table">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <th>Libro</th>
+                                        <th scope="col">Libro</th>
                                     </tr>
                                 </thead>
                                 <tbody id="lisTbody_fn3">
@@ -255,6 +259,7 @@
     </div>
 
     <div class="row">
+
         <div class="col-12  col-lg-20">
             <div class="card shadow">
                 <div class="card-header py-3">
@@ -262,12 +267,12 @@
                 </div>
                 <div class="card-body card-scrollable">
                     <div class="mb-3">
-                        <table id="lista_fun4" class="table table-bordered table-striped table-hover">
-                            <thead class="thead-light">
+                        <table id="lista_fun4" class="table">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <th>Libro</th>
-                                    <th>Género</th>
-                                    <th>Copias</th>
+                                    <th scope="col">Libro</th>
+                                    <th scope="col">Género</th>
+                                    <th scope="col">Copias</th>
                                 </tr>
                             </thead>
                             <tbody>
