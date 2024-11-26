@@ -1,0 +1,16 @@
+# Activar la reescritura de URLs
+RewriteEngine On
+
+# Asegurarse de que se están utilizando URLs amigables (sin index.php)
+RewriteCond %{REQUEST_URI} ^(.*)$
+RewriteCond %{DOCUMENT_ROOT}/$1 -f
+RewriteRule ^(.*)$ - [L]
+
+# Si la URL no tiene el index.php, se añade automáticamente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/index.php/$1 [L,QSA]
+
+# Habilitar la reescritura para la carpeta de "public" que es la que se usa en CodeIgniter 4
+RewriteRule ^$ public/ [L]
+RewriteRule (.*) public/$1 [L]
