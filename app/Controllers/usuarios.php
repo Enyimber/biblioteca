@@ -3,9 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\UsuarioModel;
-use CodeIgniter\Controller;
 
-class Usuarios extends Controller
+class Usuarios extends MyController
 {
     protected $usuarioModel;
 

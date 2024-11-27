@@ -3,9 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\LibroModel;
-use CodeIgniter\Controller;
 
-class Libros extends Controller
+class Libros extends Mycontroller
 {
     protected $session;
     protected $libroModel;

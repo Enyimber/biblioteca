@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Models\PrestamosModel;
 use App\Models\UsuarioModel;
 use App\Models\LibroModel;
-use CodeIgniter\Controller;
 
 class Prestamos extends MyController
 {
