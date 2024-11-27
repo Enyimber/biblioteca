@@ -1,0 +1,306 @@
+--------tablas debiles------------
+drop table if exists solicitud_de_prestamo;
+drop table if exists prestamo;
+drop table if exists autor_libro;
+drop table if exists libro_curso;
+drop table if exists usuario;
+drop table if exists libro;
+
+--------tablas fuertes------------
+
+drop table if exists rol;
+drop table if exists autor;
+drop table if exists curso;
+
+---------crear tablas fuertes------
+
+create table curso(
+	id_curso serial primary key,
+	nombre_curso varchar(50) not null
+);
+
+insert into curso(nombre_curso) 
+values 
+	('Economia'),
+	('Quimica'),
+        ('Modas'),
+        ('Sistemas'),
+        ('mecanica');
+
+select * from curso;
+
+----------------------------------
+create table autor(
+	id_autor serial primary key,
+	nombre_autor varchar(100) not null
+);
+
+insert into autor(nombre_autor) 
+values 
+      ---economia---
+	 ('Kenichi Ohmae'), ('Juan Tugores'),('J.R.Cuadrado'), ('Hank Wichern'),
+         ('Olivier Blanchard'),('Fernando Gaviria'),('Frederic S. Mishkin'),
+         ('Juan Camilo'),('Juan David Barbosa'),('Javier Serrano Rodriguez'), 
+      ---quimica---        
+         ('Paula Yurkanis Bruice'),('Chang Overby'),('José Garzón'),
+         ('Drew H.E.H. Wang'),('Whitten Davis'),('McCabe Smith Harriot'),
+         ('Eduard Montes'),('Joseph P.H.'),('Pearson'),('Jairo Granados'),
+      ---modas---
+         ('Winifred Aldrich'),('Sarah Bailey'),('Paula Cuadrado'),
+         ('Guillaume Erner'),('F.V. Feyerabend'),('Sue Jenkyn Jones'),
+         ('Alison Smith'),('Elena Salcedo'),('Harriet Posner'),
+         ('Dimitri koumbiz');
+
+select * from autor;
+
+------------------------------------
+create table rol(
+	id_rol serial primary key,
+	nombre_rol varchar(50) not null
+);
+
+insert into rol(nombre_rol) 
+values
+	('biobliotecario'),
+	('estudiante'),
+	('profesor');
+
+select * from rol;
+
+---------crear tablas debiles------
+
+create table libro(
+	id_libro serial primary key,
+	nombre_libro varchar(100) not null,
+	genero varchar(100) not null,
+	fecha_publicacion date not null,
+	copias_libro int default 0 check(copias_libro >= 0)
+);
+
+insert into libro(nombre_libro,genero,fecha_publicacion,copias_libro) 
+values 
+        ---ECONOMIA---
+	('El proximo escenario global','no ficción','1995-10-01',7),
+	('Economia Internacional','no ficción','1998-09-01',13),
+	('Politica Economica','no ficción','1997-08-01',4),
+        ('Pronosticos en los negocios','no ficción','1985-05-01',6),
+        ('Macroeconomia','no ficción','2000-08-01',8),
+        ('Moneda, Banca y Teoria Monetaria','no ficción','1998-03-01',12),
+        ('Moneda, Banca y Mercados Financieros','no ficción','1997-02-01',6),
+        ('Derecho presupuestal colombiano','no ficción','2018-05-01',3),
+        ('la valoracion aduanera en colombia','no ficción','1997-09-01',6),
+     ('Matematicas financieras y evaluaciones de proyectos','no ficción','1997-02-01',21),
+         ---QUIMICA---
+         ('Fundamentos de quimica organica','no ficción','1990-11-01',7),
+         ('Quimica','no ficción','2000-02-01',14),
+         ('fundamentos de quimica general','no ficción','2008-12-01',10),
+         ('Quimica general, organica y biologica','no ficción','2016-01-01',4),
+         ('Quimica general','no ficción','1985-04-01',3),
+         ('Operaciones unitarias en ingenierias quimicas','no ficción','2000-11-01',3),
+         ('Quimica analitica cualitativa','no ficción','2005-08-01',6),
+         ('FisicoQuimica','no ficción','1990-01-01',2),
+         ('Quimica organica','no ficción','1995-01-01',6),
+         ('Quimica aplicada','no ficción','1998-08-01',10),
+         ---MODAS---
+         ('tejido, forma y patronaje plano','no ficción','2008-08-01',9), 
+         ('moda y visual merchandising','no ficción','2011-01-01',18),
+         ('victimas de la moda','no ficción','2000-06-01',15),
+         ('Sociologia de las tendencias','no ficción','2015-10-01',9),
+         ('Ilustracion de modas y plantillas','no ficción','2010-02-01',11),
+         ('Diseño de modas','no ficción','2012-07-01',15),
+         ('Gran libro de la costura','no ficción','2018-01-01',10),
+         ('Moda etica para un futuro sostenible','no ficción','2010-07-01',11),
+         ('Marketing de moda','no ficción','2001-07-01',14),
+         ('Moda y retail','no ficción','2011-07-01',18);
+
+select * from libro;
+
+-----------------------------------------
+create table usuario(
+	id_usuario serial primary key,
+	nombre_usuario varchar(50) not null,
+	usuario_login varchar(100) not null unique,
+	clave varchar(100) not null,
+	id_rol int references rol(id_rol) on delete cascade
+);
+
+insert into usuario(nombre_usuario,usuario_login,clave,id_rol) 
+values 
+	('ferley','ferley','123',1),
+	('Alejandro','Alejandro','123',2),
+        ('Alberto','Alberto','123',1),
+        ('Raul','Raul','123',2),
+        ('pablo','pablo','123',1),
+        ('Fernando','Fernando','123',1),
+        ('Carlos','Carlos','123',1); 
+
+ 
+select * from usuario;
+
+------------------------------------------
+create table libro_curso(
+	id_libro int references libro(id_libro) on delete cascade,
+	id_curso int references curso(id_curso) on delete cascade
+);
+
+insert into libro_curso(id_libro,id_curso)
+values
+	(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),
+        (11,2),(12,2),(13,2),(14,2),(15,2),(16,2),(17,2),(18,2),(19,2),(20,2),
+        (21,3),(22,3),(23,3),(24,3),(25,3),(26,3),(27,3),(28,3),(29,3),(30,3);
+
+select * from libro_curso;
+
+------------------------------------------
+create table autor_libro(
+	id_libro int references libro(id_libro) on delete cascade,
+	id_autor int references autor(id_autor) on delete cascade
+);
+
+insert into autor_libro(id_libro,id_autor)
+values
+	(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,9),(10,10),
+        (11,11),(12,12),(13,13),(14,14),(15,15),(16,16),(17,17),(18,18),(19,19),(20,20),
+        (21,21),(22,22),(23,23),(24,24),(25,25),(26,26),(27,27),(28,28),(29,29),(30,30);
+
+
+select * from autor_libro;
+
+--------------------------------------------------
+create table prestamo(
+	id_prestamo serial primary key,
+	id_libro int references libro(id_libro) on delete cascade,
+	id_usuario int references usuario(id_usuario) on delete cascade,
+	fecha_hora timestamp not null,
+	fecha_hora_entrega timestamp,
+	estado boolean default true
+);
+
+insert into prestamo(id_libro,id_usuario,fecha_hora)
+values
+	(1,1,'2024-10-01 12:34:56'),
+	(2,2,'2024-10-01 13:30:59'),
+	(2,1,'2024-10-01 12:34:56'),
+	(2,2,'2024-10-01 13:30:59');
+
+select * from prestamo;
+
+--------------------------------------------------
+CREATE TABLE solicitud_de_prestamo (
+    id_solicitud SERIAL PRIMARY KEY,
+    id_usuario INT REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    id_libro INT REFERENCES libro(id_libro) ON DELETE CASCADE,
+    fecha_solicitud TIMESTAMP DEFAULT current_timestamp,
+    estado VARCHAR(20) DEFAULT 'Pendiente' -- Pendiente, Aprobada, Rechazada
+);
+
+----------consultas-----------------------------------
+
+select genero,sum(copias_libro) as cantidad_libros from libro 
+where genero ='novela'
+group by genero;
+
+------------------------------------------------------
+select count(*) as prestamos from prestamo
+where fecha_hora_entrega is null;
+
+------------------------------------------------------
+select au.nombre_autor,count(l.id_libro) as libro
+from prestamo pe, libro l, autor_libro al, autor au
+where(pe.id_libro = l.id_libro and l.id_libro = al.id_libro and al.id_autor = au.id_autor)
+group by nombre_autor
+order by libro desc
+limit 1;
+
+---------------------------------------------------------
+select nombre_libro, fecha_publicacion from libro
+order by fecha_publicacion
+limit 2;
+
+----------------------------------------------------------
+select l.nombre_libro, count(pe.id_prestamo) as prestamos
+from prestamo pe
+inner join libro l on l.id_libro = pe.id_libro
+group by l.nombre_libro
+order by prestamos desc
+limit 2;
+
+--------------------funciones-----------------------------
+
+create or replace function libros_disponibles() returns int 
+as $$
+begin
+return (select sum(copias_libro) from libro);
+end;
+$$ language plpgsql;
+
+select * from libros_disponibles();
+
+-----------------------------------------------------------
+create or replace function libros_disponibles_genero(varchar) 
+returns table(
+	nombre varchar(50)
+)
+as $$
+begin
+return query select nombre_libro
+	   from libro 
+	   where genero = $1 and copias_libro > 0;
+end;
+$$ language plpgsql;
+
+select * from libros_disponibles_genero('novela');
+
+-------------------------------------------------------------
+
+create or replace function libros_autor(varchar,int,int)
+returns table(
+	nombre varchar(50),
+	fecha_publicacion date
+)
+as $$
+begin
+return query select l.nombre_libro,l.fecha_publicacion
+			 from libro l
+			 inner join autor_libro al on l.id_libro = al.id_libro
+			 inner join autor au on al.id_autor = au.id_autor
+			 where au.nombre_autor =$1 and extract(year from l.fecha_publicacion)
+			 between $2 and $3;
+end;
+$$ language plpgsql;
+
+select * from libros_autor('migel',1990,2022);
+
+----------------------------------------------------------
+create or replace function libros_menos_prestados()
+returns table(
+	id int,
+	nombre varchar,
+	genero varchar,
+	fecha date,
+	copias int
+)
+as $$
+begin
+return query select * 
+			 from libro l
+			 where id_libro not in (select id_libro
+    								from prestamo
+    								where current_date - fecha_hora::date <= 180);
+end;
+$$ language plpgsql;
+
+select * from libros_menos_prestados();
+
+-------------------------------------------------------------
+create or replace function promedio()
+returns int
+as $$
+begin
+return (select  avg(extract(year from current_date) - extract(year from fecha_publicacion::date))
+	   from libro);
+end;
+$$ language plpgsql;
+
+
+select * from solicitud_de_prestamo;

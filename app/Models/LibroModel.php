@@ -8,7 +8,7 @@ class LibroModel extends Model
 {
     protected $table = 'libro';
     protected $primaryKey = 'id_libro';
-    protected $allowedFields = ['nombre', 'autor', 'genero', 'fecha_publicacion', 'disponible']; // Actualiza según tus columnas
+    protected $allowedFields = ['nombre_libro', 'genero', 'fecha_publicacion', 'copias_libro']; // Actualiza según tus columnas
     protected $useTimestamps = false; // Si usas timestamps (created_at, updated_at), cambia a true
 
     // Obtener todos los libros

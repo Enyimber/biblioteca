@@ -3,9 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\LibroModel;
-use CodeIgniter\Controller;
 
-class Libros extends Controller
+class Libros extends MyController
 {
     protected $session;
     protected $libroModel;
@@ -24,37 +23,62 @@ class Libros extends Controller
 
     public function create()
     {
+        // Validaciones
         $validation = \Config\Services::validation();
-        $validation->setRule('titulo', 'Título', 'required');
-        $validation->setRule('autor', 'Autor', 'required');
-        $validation->setRule('genero', 'Género', 'required');
-        $validation->setRule('anio', 'Año', 'required|valid_date');
-        $validation->setRule('cantidad', 'Cantidad', 'required|numeric');
+        $validation->setRules([
+            'titulo' => 'required',
+            'autor' => 'required',
+            'genero' => 'required',
+            'anio' => 'required|valid_date[Y-m-d]',
+            'cantidad' => 'required|numeric',
+        ]);
 
         if (!$validation->withRequest($this->request)->run()) {
-            $this->session->setFlashdata('error', 'Error en la validación. Verifica los campos.');
-            return redirect()->to('/libros');
+            // Validación fallida
+            $this->session->setFlashdata('error', implode('<br>', $validation->getErrors()));
+            return redirect()->to(base_url('libros'))->withInput();
         }
 
+        // Insertar datos
         $data = [
             'nombre_libro' => $this->request->getPost('titulo'),
             'genero' => $this->request->getPost('genero'),
             'fecha_publicacion' => $this->request->getPost('anio'),
-            'copias_libro' => $this->request->getPost('cantidad'),
+            'copias_libro' => $this->request->getPost('cantidad')
         ];
 
         if ($this->libroModel->insert($data)) {
             $this->session->setFlashdata('success', 'Libro creado con éxito.');
         } else {
-            $this->session->setFlashdata('error', 'Hubo un problema al crear el libro.');
+            $this->session->setFlashdata('error', 'Error al crear el libro.');
         }
 
-        return redirect()->to('/libros');
+        return redirect()->to(base_url('libros'));
     }
 
     public function edit()
     {
         $id = $this->request->getPost('id_libro');
+        if (!$id) {
+            $this->session->setFlashdata('error', 'No se proporcionó un ID válido para actualizar.');
+            return redirect()->to(base_url('libros'));
+        }
+
+        // Validaciones
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'titulo' => 'required',
+            'genero' => 'required',
+            'fecha_publicacion' => 'required|valid_date[Y-m-d]',
+            'copias_libro' => 'required|numeric',
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('error', implode('<br>', $validation->getErrors()));
+            return redirect()->to(base_url('libros'))->withInput();
+        }
+
+        // Actualizar datos
         $data = [
             'nombre_libro' => $this->request->getPost('titulo'),
             'genero' => $this->request->getPost('genero'),
@@ -65,12 +89,11 @@ class Libros extends Controller
         if ($this->libroModel->update($id, $data)) {
             $this->session->setFlashdata('success', 'Libro actualizado con éxito.');
         } else {
-            $this->session->setFlashdata('error', 'Hubo un problema al actualizar el libro.');
+            $this->session->setFlashdata('error', 'Error al actualizar el libro.');
         }
 
-        return redirect()->to('/libros');
+        return redirect()->to(base_url('libros'));
     }
-
     public function delete()
     {
         $id = $this->request->getPost('id_libro');
@@ -80,9 +103,8 @@ class Libros extends Controller
             $this->session->setFlashdata('error', 'Hubo un problema al eliminar el libro.');
         }
 
-        return redirect()->to('/libros');
+        return redirect()->to('libros');
     }
-
     public function cargaMasiva()
     {
         if ($this->request->getFile('excel_file')) {
@@ -108,6 +130,6 @@ class Libros extends Controller
             $this->session->setFlashdata('error', 'No se subió ningún archivo.');
         }
 
-        return redirect()->to('/libros');
+        return redirect()->to('libros');
     }
 }

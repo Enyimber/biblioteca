@@ -59,6 +59,7 @@
 
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('plantilla/js/sb-admin-2.min.js') ?>"></script>
+<script src="<?= base_url('plantilla/js/notificaciones.js') ?>"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const successMessage = "<?= session()->getFlashdata('success'); ?>";

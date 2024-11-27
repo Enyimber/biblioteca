@@ -81,7 +81,7 @@ class Usuarios extends Controller
             if ($this->usuarioModel->existeUsuario($data['usuario_login'])) {
                 // Si el usuario ya existe, redirigir con mensaje de error
                 session()->setFlashdata('error', 'El nombre de usuario ya está en uso. Por favor elige otro.');
-                return redirect()->to('usuarios/crear');
+                return redirect()->to('usuarios');
             } else {
                 // Si no existe, proceder a crear el usuario
                 $this->usuarioModel->crearUsuario($data);

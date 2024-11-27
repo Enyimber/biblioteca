@@ -22,7 +22,7 @@
     <link href="<?= base_url('plantilla/css/sb-admin-2.min.css') ?>" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="<?= base_url('js/sweetalert2-handler.js') ?>"></script>
+    <script src="<?= base_url('plantilla/js/sweetalert2-handler.js') ?>"></script>
 
 </head>
 
@@ -120,36 +120,20 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <?php if (!empty($notificaciones)): ?>
-                                    <span class="badge badge-danger badge-counter"><?= count($notificaciones); ?></span>
-                                <?php endif; ?>
+                                <span id="notification-counter" class="badge badge-danger badge-counter"
+                                    style="display: none;">0</span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Solicitudes de Préstamo Pendientes
-                                </h6>
-                                <?php if (!empty($notificaciones)): ?>
-                                    <?php foreach ($notificaciones as $notificacion): ?>
-                                        <a class="dropdown-item d-flex align-items-center" href="<?= base_url('prestamos/gestionarSolicitud/' . $notificacion['id_solicitud']); ?>">
-                                            <div class="mr-3">
-                                                <div class="icon-circle bg-warning">
-                                                    <i class="fas fa-exclamation-triangle text-white"></i>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="small text-gray-500"><?= $notificacion['fecha_solicitud']; ?></div>
-                                                <span class="font-weight-bold">
-                                                    <?= $notificacion['nombre_usuario']; ?> solicitó el libro <?= $notificacion['nombre_libro']; ?>.
-                                                </span>
-                                            </div>
-                                        </a>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <a class="dropdown-item text-center small text-gray-500">No hay solicitudes pendientes</a>
-                                <?php endif; ?>
-                                <a class="dropdown-item text-center small text-gray-500" href="<?= base_url('prestamos/verSolicitudes'); ?>">Ver todas las solicitudes</a>
+                                <h6 class="dropdown-header">Notificaciones</h6>
+                                <div id="notification-list">
+                                    <!-- Aquí se llenarán las notificaciones dinámicas -->
+                                    <a class="dropdown-item text-center small text-gray-500">No hay nuevas notificaciones</a>
+                                </div>
+                                <a class="dropdown-item text-center small text-gray-500" href="<?= base_url('prestamos/verSolicitudes'); ?>">
+                                    Ver todas las solicitudes
+                                </a>
                             </div>
                         </li>
 

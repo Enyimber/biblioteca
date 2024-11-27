@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\PrestamosModel;
 use App\Models\UsuarioModel;
 use App\Models\LibroModel;
-use CodeIgniter\Controller;
+use App\Models\NotificacionesModel;
 
 class Prestamos extends MyController
 {
@@ -13,10 +13,12 @@ class Prestamos extends MyController
     protected $usuarioModel;
     protected $libroModel;
     protected $session;
+    protected $notificacionesModel;
 
     public function __construct()
     {
         $this->prestamosModel = new PrestamosModel();
+        $this->notificacionesModel = new NotificacionesModel();
         $this->usuarioModel = new UsuarioModel();
         $this->libroModel = new LibroModel();
         $this->session = session();
@@ -58,7 +60,7 @@ class Prestamos extends MyController
         ];
 
         $this->prestamosModel->save($data);
-        return redirect()->to('/prestamos')->with('success', 'Préstamo registrado con éxito.');
+        return redirect()->to('prestamos')->with('success', 'Préstamo registrado con éxito.');
     }
 
     // Mostrar formulario para editar un préstamo
@@ -113,23 +115,35 @@ class Prestamos extends MyController
     // Insertar solicitud
     public function insertSolicitud()
     {
-        $data = $this->request->getPost('insertSolicitud');
+        // Obtenemos los datos del formulario
+        $data = $this->request->getPost('insertSolicitud'); // Suponiendo que la información viene en un solo campo
 
-        // Dividir los datos usando el delimitador '|'
-        list($id_usuario, $id_libro) = explode('|', $data);
+        // Dividimos los datos usando un delimitador
+        list($id_usuario, $id_libro) = explode('|', $data); // Asumimos que $data contiene "id_usuario|id_libro"
 
-        // Procesar la solicitud con los datos obtenidos
+        // Creamos el array para insertar
         $solicitud = [
             'id_usuario' => $id_usuario,
             'id_libro' => $id_libro,
+            // La columna fecha_solicitud ya tiene un valor predeterminado, no es necesario incluirla
         ];
 
+        // Inserta la solicitud en la base de datos
         $this->prestamosModel->insertSolicitud($solicitud);
 
+        // Verificamos si la inserción fue exitosa
         if ($this->prestamosModel->db->affectedRows() > 0) {
             return redirect()->to('/libros')->with('success', 'Solicitud registrada correctamente.');
         } else {
             return redirect()->to('/libros')->with('error', 'Hubo un problema al registrar la solicitud.');
         }
+    }
+
+    // Método para enviar notificación a los administradores por WebSocket
+    public function enviarNotificacionWebSocket($id_usuario, $id_libro)
+    {
+        // Lógica para enviar la notificación a través de WebSocket
+        // Aquí llamamos al método que enviará el mensaje a los administradores
+        $this->notificacionesModel->enviarNotificacion($id_usuario, $id_libro);
     }
 }

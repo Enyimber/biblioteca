@@ -9926,7 +9926,7 @@ a:focus {
 	}
 }
 .bg-login-image {
-	background-image: url("http://localhost:8080/biblioteca/plantilla/img/undraw_profile_2.svg");
+	background-image: url("http://localhost:8080/biblioteca/public/plantilla/img/undraw_profile_2.svg");
 	background-position: center;
 	background-size: cover;
 }

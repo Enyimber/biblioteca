@@ -47,7 +47,7 @@
                                 <form action="<?php echo base_url('prestamos/insertSolicitud'); ?>" method="post" style="display:inline;">
                                     <input type="hidden" name="insertSolicitud"
                                         value="<?php echo session()->get('id_usuario'); ?>|<?php echo $libro['id_libro']; ?>|">
-                                    <button type="submit" class="btn btn-warning btn-sm">solicitar</button>
+                                    <button id="sendBtn" type="submit" class="btn btn-warning btn-sm">solicitar</button>
                                 </form>
                                 </td>
                         <?php endif; ?>

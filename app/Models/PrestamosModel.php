@@ -9,23 +9,23 @@ class PrestamosModel extends Model
     protected $table = 'prestamo';  // Nombre de la tabla
     protected $primaryKey = 'id_prestamo';
     protected $allowedFields = ['id_usuario', 'id_libro', 'fecha_hora', 'fecha_hora_entrega', 'estado'];
-    
+
     // Obtener todos los préstamos
     public function getPrestamos()
     {
         return $this->select('prestamo.*, usuario.nombre_usuario, libro.nombre_libro')
-                    ->join('usuario', 'prestamo.id_usuario = usuario.id_usuario')
-                    ->join('libro', 'prestamo.id_libro = libro.id_libro')
-                    ->findAll();
+            ->join('usuario', 'prestamo.id_usuario = usuario.id_usuario')
+            ->join('libro', 'prestamo.id_libro = libro.id_libro')
+            ->findAll();
     }
 
     public function obtenerPrestamosPorUsuario($id_usuario)
     {
         return $this->select('prestamo.id_prestamo, prestamo.fecha_hora, prestamo.fecha_hora_entrega, usuario.nombre_usuario, libro.nombre_libro')
-                    ->join('usuario', 'prestamo.id_usuario = usuario.id_usuario')
-                    ->join('libro', 'prestamo.id_libro = libro.id_libro')
-                    ->where('prestamo.id_usuario', $id_usuario)
-                    ->findAll();
+            ->join('usuario', 'prestamo.id_usuario = usuario.id_usuario')
+            ->join('libro', 'prestamo.id_libro = libro.id_libro')
+            ->where('prestamo.id_usuario', $id_usuario)
+            ->findAll();
     }
 
     public function cancelarPrestamo($id_prestamo)
@@ -58,9 +58,10 @@ class PrestamosModel extends Model
     }
 
     // Función para insertar una solicitud de préstamo
-    public function insertSolicitud($data)
+    public function insertSolicitud($solicitud)
     {
-        return $this->db->table('solicitud_de_prestamo')->insert($data);
+        // Inserta la solicitud en la base de datos
+        return $this->db->table('solicitud_de_prestamo')->insert($solicitud);
     }
 
     // Función para obtener una solicitud de préstamo por su ID
