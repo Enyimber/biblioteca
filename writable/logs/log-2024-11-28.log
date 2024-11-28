@@ -1,0 +1,34 @@
+INFO - 2024-11-28 03:46:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-28 03:46:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-28 03:46:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-11-28 03:46:53 --> Datos de sesión: Array
+(
+    [id_usuario] => 1
+    [nombre_usuario] => ferley
+    [logged_in] => 1
+)
+
+DEBUG - 2024-11-28 03:46:53 --> Controlador actual: \App\Controllers\Home
+DEBUG - 2024-11-28 03:46:53 --> Usuario autenticado.
+INFO - 2024-11-28 03:46:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-11-28 03:46:53 --> Datos de sesión: Array
+(
+    [id_usuario] => 1
+    [nombre_usuario] => ferley
+    [logged_in] => 1
+)
+
+DEBUG - 2024-11-28 03:46:53 --> Controlador actual: \App\Controllers\Home
+DEBUG - 2024-11-28 03:46:53 --> Usuario autenticado.
+INFO - 2024-11-28 03:46:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-11-28 03:46:53 --> Datos de sesión: Array
+(
+    [id_usuario] => 1
+    [nombre_usuario] => ferley
+    [logged_in] => 1
+)
+
+DEBUG - 2024-11-28 03:46:53 --> Controlador actual: \App\Controllers\Home
+DEBUG - 2024-11-28 03:46:53 --> Usuario autenticado.
+INFO - 2024-11-28 03:47:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-11-28 03:47:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
