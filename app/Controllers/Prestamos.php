@@ -133,6 +133,7 @@ class Prestamos extends MyController
 
         // Verificamos si la inserción fue exitosa
         if ($this->prestamosModel->db->affectedRows() > 0) {
+            $this->enviarNotificacionWebSocket($id_usuario,$id_libro);
             return redirect()->to('/libros')->with('success', 'Solicitud registrada correctamente.');
         } else {
             return redirect()->to('/libros')->with('error', 'Hubo un problema al registrar la solicitud.');
@@ -144,6 +145,6 @@ class Prestamos extends MyController
     {
         // Lógica para enviar la notificación a través de WebSocket
         // Aquí llamamos al método que enviará el mensaje a los administradores
-        $this->notificacionesModel->enviarNotificacion($id_usuario, $id_libro);
+        $this->notificacionesModel->sendMessageToWebSocket($id_usuario, $id_libro);
     }
 }

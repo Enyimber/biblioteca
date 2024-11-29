@@ -19,7 +19,14 @@ class UsuarioModel extends Model
     // Obtener todos los usuarios
     public function obtenerUsuarios()
     {
-        return $this->findAll();
+        $builder = $this->db->table($this->table);
+        $builder->select('usuario.id_usuario, usuario.nombre_usuario, usuario.usuario_login,usuario.clave,rol.nombre_rol');
+        $builder->join('rol', 'rol.id_rol = usuario.id_rol');
+        $builder->orderBy('usuario.id_usuario', 'ASC');
+        $query = $builder->get();
+
+        return $query->getResultArray(); // Retorna los resultados como un arreglo asociativo
+
     }
 
     // Obtener un usuario por ID

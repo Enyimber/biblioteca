@@ -2,27 +2,44 @@
 
 namespace App\Models;
 
-use GuzzleHttp\Client;
+use Ratchet\Client\WebSocket;
+use Ratchet\Client\Connector;
+use React\EventLoop\Loop;
+use React\EventLoop\LoopInterface;
 
 class NotificacionesModel
 {
-    public function enviarNotificacion($id_usuario, $id_libro)
+    protected $DBGroup          = 'default';
+    protected $table            = 'websocket';
+    protected $primaryKey       = 'id';
+
+    // Función para conectar y enviar un mensaje a través de WebSocket
+    public function sendMessage($message)
     {
-        // Crear el cliente HTTP para hacer una petición al servidor WebSocket
-        $client = new Client();
+        // Crear un loop para la conexión ReactPHP
+        $loop = Factory::create();
 
-        // Preparar el mensaje que se enviará
-        $mensaje = "El usuario con ID $id_usuario ha solicitado el libro con ID $id_libro.";
+        // Conectar al servidor WebSocket (ajustar el host y el puerto)
+        $connector = new Connector($loop);
 
-        // Enviar la notificación a todos los administradores conectados mediante WebSocket
-        $response = $client->post('http://localhost:8081/notifications', [
-            'json' => [
-                'title' => 'Nueva solicitud de préstamo',
-                'message' => $mensaje
-            ]
-        ]);
+        // Aquí ajustas la dirección del WebSocket (en este caso el puerto 8081)
+        $connector('ws://localhost:8081')->then(
+            function(WebSocket $conn) use ($message) {
+                // Cuando se establece la conexión, enviar el mensaje
+                echo "Conectado al WebSocket\n";
 
-        // Devolver el código de estado de la respuesta
-        return $response->getStatusCode();
-    }
+                // Enviar el mensaje al servidor WebSocket
+                $conn->send($message);
+
+                // Cerrar la conexión después de enviar el mensaje
+                $conn->close();
+            },
+            function(\Exception $e) {
+                // En caso de error en la conexión, mostrar el error
+                echo "Error al conectar: " . $e->getMessage() . "\n";
+            }
+        );
+
+        // Ejecutar el loop
+        $loop->run();
 }

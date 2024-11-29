@@ -17,7 +17,7 @@ class Libros extends MyController
 
     public function index()
     {
-        $data['libros'] = $this->libroModel->findAll();
+        $data['libros'] = $this->libroModel->getAllLibros();
         return view('header') . view('libros', $data);
     }
 

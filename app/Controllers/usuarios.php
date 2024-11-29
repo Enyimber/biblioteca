@@ -3,18 +3,21 @@
 namespace App\Controllers;
 
 use App\Models\UsuarioModel;
-use CodeIgniter\Controller;
+use App\Models\RolModel;
+use Config\Services;
 
-class Usuarios extends Controller
+class Usuarios extends MyController
 {
     protected $usuarioModel;
+    protected $rolModel;
 
     public function __construct()
     {
-        // Instanciamos el modelo de usuarios
+        // Instanciamos los modelos
         $this->usuarioModel = new UsuarioModel();
+        $this->rolModel = new RolModel();
         helper(['url', 'form']);
-        $this->validation =  \Config\Services::validation();
+        $this->validation = Services::validation();
     }
 
     // Listar usuarios
@@ -22,8 +25,11 @@ class Usuarios extends Controller
     {
         // Obtener todos los usuarios
         $data['usuarios'] = $this->usuarioModel->obtenerUsuarios();
-        
-        // Mostrar vista con los datos de los usuarios
+
+        // Obtener todos los roles
+        $data['roles'] = $this->rolModel->findAll();
+
+        // Mostrar vista con los datos de los usuarios y roles
         echo view('header');
         echo view('usuarios', $data);
 
@@ -62,33 +68,39 @@ class Usuarios extends Controller
             'clave' => 'required',
             'rol' => 'required'
         ]);
+        $datos = [
+            'nombre' => $this->request->getPost('nombre'),
+            'usuario' => $this->request->getPost('usuario'),
+            'clave' => $this->request->getPost('clave'),
+            'rol' => $this->request->getPost('rol'),
+        ];
 
         // Validar datos del formulario
-        if ($this->validation->run()) {
+        if (!$this->validation->run($datos)) {
             // Si la validación falla, redirigir con un mensaje de error
-            session()->setFlashdata('error', 'validacion nula.');
+            session()->setFlashdata('error', 'Por favor completa todos los campos.');
             return redirect()->to(base_url('usuarios'));
-        } else {
-            // Datos del formulario
-            $data = [
-                'nombre_usuario' => $this->request->getPost('nombre'),
-                'usuario_login' => $this->request->getPost('usuario'),
-                'clave' => $this->request->getPost('clave'),
-                'id_rol' => $this->request->getPost('rol'),
-            ];
-
-            // Verificar si el usuario ya existe
-            if ($this->usuarioModel->existeUsuario($data['usuario_login'])) {
-                // Si el usuario ya existe, redirigir con mensaje de error
-                session()->setFlashdata('error', 'El nombre de usuario ya está en uso. Por favor elige otro.');
-                return redirect()->to('usuarios');
-            } else {
-                // Si no existe, proceder a crear el usuario
-                $this->usuarioModel->crearUsuario($data);
-                session()->setFlashdata('success', 'Usuario creado exitosamente.');
-                return redirect()->to(base_url('usuarios'));
-            }
         }
+
+        // Datos del formulario
+        $data = [
+            'nombre_usuario' => $this->request->getPost('nombre'),
+            'usuario_login' => $this->request->getPost('usuario'),
+            'clave' => $this->request->getPost('clave'),
+            'id_rol' => $this->request->getPost('rol'),
+        ];
+
+        // Verificar si el usuario ya existe
+        if ($this->usuarioModel->existeUsuario($data['usuario_login'])) {
+            // Si el usuario ya existe, redirigir con mensaje de error
+            session()->setFlashdata('error', 'El nombre de usuario ya está en uso. Por favor elige otro.');
+            return redirect()->to(base_url('usuarios'));
+        }
+
+        // Crear el usuario
+        $this->usuarioModel->crearUsuario($data);
+        session()->setFlashdata('success', 'Usuario creado exitosamente.');
+        return redirect()->to(base_url('usuarios'));
     }
 
     // Editar usuario

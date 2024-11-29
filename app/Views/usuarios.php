@@ -22,13 +22,13 @@
                         <td><?php echo $usuario['nombre_usuario']; ?></td>
                         <td><?php echo $usuario['usuario_login']; ?></td>
                         <td><?php echo $usuario['clave']; ?></td>
-                        <td><?php echo $usuario['id_rol']; ?></td>
+                        <td><?php echo $usuario['nombre_rol']; ?></td>
                         <td>
                             <button
                                 class="btn btn-warning btn-sm btn-editar"
                                 data-id="<?php echo $usuario['id_usuario']; ?>"
                                 data-clave="<?php echo $usuario['clave']; ?>"
-                                data-rol="<?php echo $usuario['id_rol']; ?>"
+                                data-rol="<?php echo $usuario['nombre_rol']; ?>"
                                 data-toggle="modal"
                                 data-target="#modalEditarUsuario">
                                 Editar
@@ -83,10 +83,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="rol">Rol</label>
-                                <select name="rol" class="form-control">
-                                    <option value="1">Admin</option>
-                                    <option value="3">Estudiante</option>
-                                    <option value="2">Profesor</option>
+                                <select name="rol" class="form-control" id="rol">
+                                    <?php foreach ($roles as $rol) : ?>
+                                        <option value="<?= $rol['id_rol']; ?>"><?= $rol['nombre_rol']; ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-success">Crear Usuario</button>
@@ -134,10 +134,10 @@
                     <!-- Campo para editar rol -->
                     <div class="form-group">
                         <label for="editar-rol">Rol</label>
-                        <select class="form-control" name="rol" id="editar-rol" required>
-                            <option value="1">Admin</option>
-                            <option value="2">Profesor</option>
-                            <option value="3">Estudiante</option>
+                        <select name="rol" class="form-control" id="rol">
+                            <?php foreach ($roles as $rol) : ?>
+                                <option value="<?= $rol['id_rol']; ?>"><?= $rol['nombre_rol']; ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
@@ -150,21 +150,21 @@
     </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Escuchar clics en los botones "Editar"
-    document.querySelectorAll('.btn-editar').forEach(function (button) {
-        button.addEventListener('click', function () {
-            // Obtener datos del usuario desde los atributos del botón
-            const userId = this.getAttribute('data-id');
-            const userClave = this.getAttribute('data-clave');
-            const userRol = this.getAttribute('data-rol');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Escuchar clics en los botones "Editar"
+        document.querySelectorAll('.btn-editar').forEach(function(button) {
+            button.addEventListener('click', function() {
+                // Obtener datos del usuario desde los atributos del botón
+                const userId = this.getAttribute('data-id');
+                const userClave = this.getAttribute('data-clave');
+                const userRol = this.getAttribute('data-rol');
 
-            // Rellenar los campos del modal con los datos del usuario
-            document.getElementById('editar-id-usuario').value = userId;
-            document.getElementById('editar-clave').value = userClave;
-            document.getElementById('editar-rol').value = userRol;
+                // Rellenar los campos del modal con los datos del usuario
+                document.getElementById('editar-id-usuario').value = userId;
+                document.getElementById('editar-clave').value = userClave;
+                document.getElementById('editar-rol').value = userRol;
+            });
         });
     });
-});
 </script>
 <?= $this->include('footer') ?>

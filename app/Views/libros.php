@@ -3,10 +3,10 @@
 
     <!-- Botón para Crear Nuevo Libro -->
     <?php if (session()->get('id_usuario') == 1) : ?>
-    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalLibros">
-        Crear Nuevo Libro
-    </button>
-    <?php endif;?>
+        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalLibros">
+            Crear Nuevo Libro
+        </button>
+    <?php endif; ?>
     <!-- Tabla de libros -->
     <table class="table table-bordered">
         <thead>
@@ -16,6 +16,7 @@
                 <th>Género</th>
                 <th>Año de Publicación</th>
                 <th>Cantidad</th>
+                <th>Autor</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                         <td><?php echo $libro['genero']; ?></td>
                         <td><?php echo $libro['fecha_publicacion']; ?></td>
                         <td><?php echo $libro['copias_libro']; ?></td>
+                        <td><?php echo $libro['nombre_autor']; ?></td>
                         <?php if (session()->get('id_usuario') == 1) : ?>
                             <td>
                                 <!-- Botón para Editar -->
@@ -49,7 +51,7 @@
                                         value="<?php echo session()->get('id_usuario'); ?>|<?php echo $libro['id_libro']; ?>|">
                                     <button id="sendBtn" type="submit" class="btn btn-warning btn-sm">solicitar</button>
                                 </form>
-                                </td>
+                            </td>
                         <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
@@ -179,3 +181,21 @@
     }
 </script>
 <?= $this->include('footer') ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const successMessage = "<?= session()->getFlashdata('success'); ?>";
+        if (successMessage) {
+            socket.onopen = () => {
+                const message = 'Hola perra hpta';
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    // Enviar el mensaje con un tipo 'chat'
+                    socket.send(JSON.stringify({
+                        type: 'chat',
+                        message: message
+                    }));
+                }
+            };
+
+        }
+    });
+</script>

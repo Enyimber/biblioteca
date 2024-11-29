@@ -14,7 +14,13 @@ class LibroModel extends Model
     // Obtener todos los libros
     public function getAllLibros()
     {
-        return $this->orderBy('id_libro', 'DESC')->findAll();
+        $builder = $this->db->table($this->table);
+        $builder->select('libro.id_libro, libro.nombre_libro,libro.genero,libro.fecha_publicacion,libro.copias_libro,autor.nombre_autor');
+        $builder->join('autor_libro', 'autor_libro.id_libro = libro.id_libro');
+        $builder->join('autor', 'autor.id_autor = autor_libro.id_autor');
+        $query = $builder->get();
+
+        return $query->getResultArray();
     }
 
     // Obtener un libro específico

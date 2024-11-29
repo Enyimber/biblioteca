@@ -26,7 +26,7 @@ socket.onclose = () => {
 function addNotification(message) {
 
 
-    alert(message);
+    
 
     const notificationList = document.getElementById('notification-list');
     const notificationCounter = document.getElementById('notification-counter');
@@ -54,14 +54,3 @@ function addNotification(message) {
     notificationCounter.textContent = currentCount + 1;
     notificationCounter.style.display = 'inline-block';
 }
-
-document.getElementById('sendBtn').onclick = function() {
-    const message = 'Hola perra hpta';
-    if (socket && socket.readyState === WebSocket.OPEN) {
-        // Enviar el mensaje con un tipo 'chat'
-        socket.send(JSON.stringify({
-            type: 'chat',
-            message: message
-        }));
-    } 
-};
